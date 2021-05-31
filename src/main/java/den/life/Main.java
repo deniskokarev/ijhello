@@ -1,5 +1,6 @@
-package den;
+package den.life;
 
+import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
 
@@ -11,12 +12,14 @@ public class Main {
         Terminal terminal = null;
         try {
             terminal = defaultTerminalFactory.createTerminal();
-            terminal.putCharacter('H');
-            terminal.putCharacter('e');
-            terminal.putCharacter('l');
-            terminal.putCharacter('l');
-            terminal.putCharacter('o');
-            terminal.putCharacter('\n');
+            terminal.enterPrivateMode();
+            TerminalSize tsz = terminal.getTerminalSize();
+            terminal.clearScreen();
+            final String message = "Hello, world!";
+            int y = tsz.getRows()/2;
+            int x = (tsz.getColumns() - message.length())/2;
+            terminal.setCursorPosition(x, y);
+            terminal.putString(message);
             terminal.flush();
             terminal.readInput();
         } catch (IOException e) {
